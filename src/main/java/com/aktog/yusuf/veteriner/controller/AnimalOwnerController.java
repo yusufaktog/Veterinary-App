@@ -3,7 +3,6 @@ package com.aktog.yusuf.veteriner.controller;
 import com.aktog.yusuf.veteriner.dto.AnimalDto;
 import com.aktog.yusuf.veteriner.dto.AnimalOwnerDto;
 import com.aktog.yusuf.veteriner.dto.request.CreateAnimalOwnerRequest;
-import com.aktog.yusuf.veteriner.dto.request.CreateAnimalRequest;
 import com.aktog.yusuf.veteriner.dto.request.UpdateAnimalOwnerRequest;
 import com.aktog.yusuf.veteriner.service.AnimalOwnerService;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/v1/owner")
@@ -28,12 +28,12 @@ public class AnimalOwnerController {
         return ResponseEntity.ok(new ArrayList<>(ownerService.getAllAnimalOwnerDtoList()));
     }
 
-    @GetMapping("/filter/name{name}")
+    @GetMapping("/filter/n{name}")
     public ResponseEntity<List<AnimalOwnerDto>> filterByName(@RequestParam String name){
         return ResponseEntity.ok(ownerService.filterByName(name));
     }
 
-    @GetMapping("/filter/surname{name}")
+    @GetMapping("/filter/s{surname}")
     public ResponseEntity<List<AnimalOwnerDto>> filterBySurname(@RequestParam String surname){
         return ResponseEntity.ok(ownerService.filterBySurname(surname));
     }
@@ -47,7 +47,6 @@ public class AnimalOwnerController {
     public ResponseEntity<AnimalOwnerDto> updateOwner(@PathVariable String ownerId,
                                                       @Valid @RequestBody UpdateAnimalOwnerRequest request) {
         return ResponseEntity.ok(ownerService.updateAnimalOwner(ownerId, request));
-
     }
 
     @DeleteMapping("/{ownerId}")

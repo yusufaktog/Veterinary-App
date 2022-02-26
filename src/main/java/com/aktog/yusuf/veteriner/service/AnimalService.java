@@ -34,10 +34,18 @@ public class AnimalService {
     public List<AnimalDto> filterByType(String type) {
         return getAllAnimalDtoList().
                 stream().
-                filter(a -> a.
+                filter(animalDto -> animalDto.
                         getType().
                         toUpperCase().
                         contains(type.toUpperCase())).collect(Collectors.toList());
+    }
+
+    public List<AnimalDto> filterByGenus(String genus) {
+        return getAllAnimalDtoList().stream().
+                filter(animalDto -> animalDto.
+                        getGenus().
+                        toUpperCase().
+                        contains(genus.toUpperCase())).collect(Collectors.toList());
     }
 
     public AnimalDto createAnimal(CreateAnimalRequest request) {
@@ -77,7 +85,7 @@ public class AnimalService {
     }
 
     public Animal findByAnimalId(String id) {
-        return animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Animal id: " + id + "not found"));
+        return animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Pet id: " + id + " not found"));
     }
 
     public List<AnimalDto> getAllAnimalDtoList() {

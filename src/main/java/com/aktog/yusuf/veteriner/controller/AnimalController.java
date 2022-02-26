@@ -1,14 +1,12 @@
 package com.aktog.yusuf.veteriner.controller;
 
 import com.aktog.yusuf.veteriner.dto.AnimalDto;
-import com.aktog.yusuf.veteriner.dto.AnimalOwnerDto;
-import com.aktog.yusuf.veteriner.dto.request.CreateAnimalOwnerRequest;
 import com.aktog.yusuf.veteriner.dto.request.CreateAnimalRequest;
 import com.aktog.yusuf.veteriner.dto.request.UpdateAnimalRequest;
-import com.aktog.yusuf.veteriner.entity.Animal;
 import com.aktog.yusuf.veteriner.service.AnimalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/animal")
+@RequestMapping("/v1/pet")
 public class AnimalController {
     private final AnimalService animalService;
 
@@ -24,14 +22,19 @@ public class AnimalController {
         this.animalService = animalService;
     }
 
-    @GetMapping("/filter/name{name}")
+    @GetMapping("/filter/n{name}")
     public ResponseEntity<List<AnimalDto>> filterByName(@RequestParam String name){
         return ResponseEntity.ok(animalService.filterByName(name));
     }
 
-    @GetMapping("/filter/type{type}")
+    @GetMapping("/filter/t{type}")
     public ResponseEntity<List<AnimalDto>> filterByType(@RequestParam String type){
         return ResponseEntity.ok(animalService.filterByType(type));
+    }
+
+    @GetMapping("/filter/g{genus}")
+    public ResponseEntity<List<AnimalDto>> filterByGenus(@RequestParam String genus){
+        return ResponseEntity.ok(animalService.filterByGenus(genus));
     }
 
     @GetMapping
@@ -58,5 +61,4 @@ public class AnimalController {
     public ResponseEntity<AnimalDto> getAnimalById(@PathVariable String animalId){
         return  ResponseEntity.ok(animalService.getAnimalById(animalId));
     }
-
 }
