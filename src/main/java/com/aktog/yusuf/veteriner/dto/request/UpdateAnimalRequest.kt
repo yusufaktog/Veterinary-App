@@ -16,6 +16,6 @@ data class UpdateAnimalRequest(
     @field:NotBlank
     val description: String,
 
-    @field:NotNull
-    val owner: AnimalOwner,
+    @field:NotBlank
+    val ownerId: String,
 )

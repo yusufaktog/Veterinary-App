@@ -5,6 +5,7 @@ import com.aktog.yusuf.veteriner.dto.converter.AnimalDtoConverter;
 import com.aktog.yusuf.veteriner.dto.request.CreateAnimalRequest;
 import com.aktog.yusuf.veteriner.dto.request.UpdateAnimalRequest;
 import com.aktog.yusuf.veteriner.entity.Animal;
+import com.aktog.yusuf.veteriner.entity.AnimalOwner;
 import com.aktog.yusuf.veteriner.repository.AnimalRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,14 @@ import java.util.stream.Collectors;
 public class AnimalService {
     private final AnimalRepository animalRepository;
     private final AnimalDtoConverter animalDtoConverter;
+    private final AnimalOwnerService animalOwnerService;
 
-    public AnimalService(AnimalRepository animalRepository, AnimalDtoConverter animalDtoConverter) {
+    public AnimalService(AnimalRepository animalRepository,
+                         AnimalDtoConverter animalDtoConverter,
+                         AnimalOwnerService animalOwnerService) {
         this.animalRepository = animalRepository;
         this.animalDtoConverter = animalDtoConverter;
+        this.animalOwnerService = animalOwnerService;
     }
 
     public List<AnimalDto> filterByName(String name) {
@@ -49,19 +54,21 @@ public class AnimalService {
     }
 
     public AnimalDto createAnimal(CreateAnimalRequest request) {
+        AnimalOwner owner = animalOwnerService.findByOwnerId(request.getOwnerId());
         Animal animal = new Animal(
                 request.getType(),
                 request.getGenus(),
                 request.getName(),
                 request.getAge(),
                 request.getDescription(),
-                request.getOwner()
+                owner
         );
         return animalDtoConverter.convert(animalRepository.save(animal));
     }
 
     public AnimalDto updateAnimal(String id, UpdateAnimalRequest request) {
         Animal animal = findByAnimalId(id);
+        AnimalOwner owner = animalOwnerService.findByOwnerId(request.getOwnerId());
         Animal updatedAnimal = new Animal(
                 animal.getId(),
                 animal.getType(),
@@ -69,7 +76,7 @@ public class AnimalService {
                 request.getName(),
                 request.getAge(),
                 request.getDescription(),
-                request.getOwner()
+                owner
         );
         return animalDtoConverter.convert(animalRepository.save(updatedAnimal));
     }
