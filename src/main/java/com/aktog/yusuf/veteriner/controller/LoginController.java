@@ -2,10 +2,10 @@ package com.aktog.yusuf.veteriner.controller;
 
 import com.aktog.yusuf.veteriner.dto.UserDto;
 import com.aktog.yusuf.veteriner.dto.request.CreateLoginRequest;
+
 import com.aktog.yusuf.veteriner.dto.request.CreateUserRequest;
 import com.aktog.yusuf.veteriner.entity.Role;
 import com.aktog.yusuf.veteriner.service.LoginService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

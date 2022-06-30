@@ -14,7 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -50,7 +52,8 @@ public class LoginService {
     public UserDto register(CreateUserRequest request) {
         return userDtoConverter.convert(userRepository.save(
                 new User(request.getUsername(),
-                        encoder.encode(request.getPassword()), request.getRoles())));
+                        encoder.encode(request.getPassword()), Optional.ofNullable(request.getRoles())
+                        .orElse(new HashSet<>()))));
     }
 
     public List<UserDto> getAllUsers() {

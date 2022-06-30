@@ -7,5 +7,5 @@ data class UserDto @JvmOverloads constructor(
     val id:String?,
     val username:String,
     val password:String,
-    val roles:Set<Role>? = HashSet<Role>()
+    val roles:Set<Role>? = HashSet()
 )
